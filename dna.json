@@ -1,0 +1,9 @@
+{
+  "run_list": [
+    "role[base]",
+    "role[app]",
+    "role[database]",
+    "role[web]",
+    "role[search]"
+  ]
+}

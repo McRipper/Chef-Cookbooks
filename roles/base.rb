@@ -32,3 +32,5 @@ override_attributes(
   }
 )
 
+
+# export LC_ALL=it_IT.UTF-8

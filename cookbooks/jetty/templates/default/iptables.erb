@@ -1,6 +1,0 @@
-*nat
-:PREROUTING ACCEPT
-:POSTROUTING ACCEPT
-:OUTPUT ACCEPT
--A PREROUTING -p tcp -m tcp --dport <%= @source %> -j REDIRECT --to-ports <%= @destination %> 
-COMMIT

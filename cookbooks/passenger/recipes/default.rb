@@ -13,12 +13,13 @@ end
 
 nginx_path = node[:passenger][:production][:path]
 
-bash "install passenger/nginx" do
-  user "root"
-  code <<-EOH
-  passenger-install-nginx-module --auto --auto-download --prefix="#{nginx_path}" --extra-configure-flags="#{node[:passenger][:production][:configure_flags]}"
-  EOH
+rbenv_script "Install passenger Nginx" do
+  code   %{passenger-install-nginx-module --auto --auto-download --prefix="#{nginx_path}" --extra-configure-flags="#{node[:passenger][:production][:configure_flags]}"}
   not_if "test -e #{nginx_path}"
+end
+
+rbenv_script "Set nginx path" do
+  
 end
 
 log_path = node[:passenger][:production][:log_path]
@@ -42,33 +43,33 @@ directory "#{nginx_path}/conf/sites.d" do
   notifies :reload, 'service[nginx]'
 end
 
-template "#{nginx_path}/conf/nginx.conf" do
-  source "nginx.conf.erb"
-  owner "root"
-  group "root"
-  mode 0644
-  variables(
-    :log_path => log_path,
-    :passenger_root => %x(rbenv which passenger),
-    :ruby_path => %x(rbenv which ruby),
-    :passenger => node[:passenger][:production],
-    :pidfile => "#{nginx_path}/nginx.pid"
-  )
-  notifies :run, 'bash[config_patch]'
-end
-
-cookbook_file "#{nginx_path}/sbin/config_patch.sh" do
-  owner "root"
-  group "root"
-  mode 0755
-end
-
-bash "config_patch" do
-  # only_if "grep '##PASSENGER_ROOT##' #{nginx_path}/conf/nginx.conf"
-  user "root"
-  code "#{nginx_path}/sbin/config_patch.sh #{nginx_path}/conf/nginx.conf"
-  notifies :reload, 'service[nginx]'
-end
+# template "#{nginx_path}/conf/nginx.conf" do
+#   source "nginx.conf.erb"
+#   owner "root"
+#   group "root"
+#   mode 0644
+#   variables(
+#     :log_path => log_path,
+#     :passenger_root => %x(rbenv which passenger),
+#     :ruby_path => %x(rbenv which ruby),
+#     :passenger => node[:passenger][:production],
+#     :pidfile => "#{nginx_path}/nginx.pid"
+#   )
+#   notifies :run, 'bash[config_patch]'
+# end
+# 
+# cookbook_file "#{nginx_path}/sbin/config_patch.sh" do
+#   owner "root"
+#   group "root"
+#   mode 0755
+# end
+# 
+# bash "config_patch" do
+#   # only_if "grep '##PASSENGER_ROOT##' #{nginx_path}/conf/nginx.conf"
+#   user "root"
+#   code "#{nginx_path}/sbin/config_patch.sh #{nginx_path}/conf/nginx.conf"
+#   notifies :reload, 'service[nginx]'
+# end
 
 template "/etc/init.d/nginx" do
   source "nginx.init.erb"

@@ -3,6 +3,10 @@
 # Recipe:: production
 
 include_recipe "rbenv"
+include_recipe "iptables"
+
+iptables_rule "port_http"
+iptables_rule "port_https"
 
 package "curl"
 if ['ubuntu', 'debian'].member? node[:platform]

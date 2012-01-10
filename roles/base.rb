@@ -2,6 +2,8 @@ name "base"
 description "Base role applied to all nodes."
 run_list(
   "recipe[apt]",
+  "recipe[iptables]",
+  "recipe[openssh]",
   "recipe[zsh]",
   "recipe[sudo]",
   "recipe[ntp]",
@@ -11,7 +13,6 @@ run_list(
   "recipe[screen]",
   "recipe[hostname]",
 #  "recipe[monit]", # problemi ad avviare il servizio senza sudo
-#  "recipe[iptables]",
   "recipe[fail2ban]"
 )
 

@@ -61,6 +61,6 @@ end
 
 ## TOFIX
 
-* Monit
+* Monit (Add all monit template to recipes)
 * Solr
 * Passenger Nginx template

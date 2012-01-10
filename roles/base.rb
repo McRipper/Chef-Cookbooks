@@ -12,7 +12,7 @@ run_list(
   "recipe[git]",
   "recipe[screen]",
   "recipe[hostname]",
-#  "recipe[monit]", # problemi ad avviare il servizio senza sudo
+  # "recipe[monit]",
   "recipe[fail2ban]"
 )
 
@@ -32,6 +32,5 @@ override_attributes(
     }
   }
 )
-
 
 # export LC_ALL=it_IT.UTF-8

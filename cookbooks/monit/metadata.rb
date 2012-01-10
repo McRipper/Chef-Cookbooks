@@ -1,23 +1,49 @@
-maintainer       "Alex Soto"
-maintainer_email "apsoto@gmail.com"
-license          "MIT"
-description      "Configures monit.  Originally based off the 37 Signals Cookbook."
-long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
-version          "0.6"
+maintainer        "Phil Cohen"
+maintainer_email  "github@phlippers.net"
+description       "Configures monit"
+version           "0.1"
 
+%w{ubuntu debian}.each do |os|
+  supports os
+end
 
-attribute 'monit/notify_email', 
-  :description => 'The email address to send alerts to.',
-  :type => "string",
-  :required => "recommended"
+attribute "monit/polling_frequency",
+  :display_name => "Polling Frequency",
+  :description  => "How frequently the monit daemon polls for changes",
+  :default      => "20"
 
-attribute 'monit/poll_period',
-  :description => 'How often to perform checks (in seconds)',
-  :type => "string",
-  :required => "recommended"
+attribute "monit/use_syslog",
+  :display_name => "Use Syslog",
+  :description  => "Use syslog for logging instead of a logfile",
+  :default      => "true"
 
-attribute 'monit/poll_start_delay',
-  :description => 'When monit first starts, how long to delay before it starts performing checks',
-  :type => "string",
-  :required => "recommended"
+attribute "monit/logfile",
+  :display_name => "Log File",
+  :description  => "If not using syslog, the log file that monit will use",
+  :default      => "/var/log/monit.log"
 
+attribute "monit/web_interface",
+  :display_name => "Web Interface Settings",
+  :description  => "Enable the web interface and define credentials",
+  :default      => {
+    :enable => "false", :port => "2812", :address => "localhost",
+    :allow  => ["localhost", "admin:b1gbr0th3r"]
+  }
+
+attribute "monit/alert_email",
+  :display_name => "Alert Email",
+  :description  => "Email address that will be notified of events",
+  :default      => "root@localhost"
+
+attribute "monit/mail",
+  :display_name => "Mail Settings",
+  :description  => "Email settings that will be used for notification of events",
+  :default      => {
+    :hostname => "localhost",
+    :port     => "25",
+    :username => "",
+    :password => "",
+    :from     => "monit@localhost",
+    :tls      => "false",
+    :timeout  => "30"
+  }

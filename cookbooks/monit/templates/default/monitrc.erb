@@ -1,25 +1,41 @@
-set daemon <%= @node[:monit][:poll_period] %>
-  with start delay <%= @node[:monit][:poll_start_delay] %>
+# Polling frequency
+set daemon <%= node[:monit][:polling_frequency] %>
 
+# Logging
+<% if node[:monit][:syslog] == "true" %>
 set logfile syslog facility log_daemon
+<% else %>
+set logfile <%= node[:monit][:logfile] %>
+<% end %>
 
-set mailserver localhost
+# Mail alerts
+set alert <%= node[:monit][:alert_email] %>
+set mailserver <%= node[:monit][:mail][:hostname] %> port <%= node[:monit][:mail][:port] %>
+  <% if node[:monit][:mail][:username] -%>
+  username "<%= node[:monit][:mail][:username] %>"
+  <% end -%>
+  <% if node[:monit][:mail][:password] -%>
+  password "<%= node[:monit][:mail][:password] %>"
+  <% end -%>
+  <% if node[:monit][:mail][:tls] -%>
+  using tlsv1
+  <% end -%>
+  with timeout <%= node[:monit][:mail][:timeout] %> seconds
 
-set eventqueue
-    basedir /var/monit  # set the base directory where events will be stored
-#    slots 1000          # optionaly limit the queue size
-
-set mail-format { 
-  from: <%= @node[:monit][:mail_format][:from] %>
-  subject: <%= @node[:monit][:mail_format][:subject] %>
-  message: <%= @node[:monit][:mail_format][:message] %>
+set mail-format {
+  from: <%= node[:monit][:mail][:from] %>
+  subject: <%= node[:monit][:mail][:subject] %>
+  message: <%= node[:monit][:mail][:message] %>
 }
 
-set alert <%= @node[:monit][:notify_email] %> NOT ON { action, instance, pid, ppid }
+# Web interface
+<% if node[:monit][:web_interface][:enable] %>
+set httpd port <%= node[:monit][:web_interface][:port] %> and
+  use address <%= node[:monit][:web_interface][:address] %>
+  <% node[:monit][:web_interface][:allow].each do |allow| -%>
+  allow <%= allow %>
+  <% end %>
+<% end %>
 
-set httpd port 3737 and
-    use address localhost
-    allow localhost
-
-include /etc/monit/conf.d/*.conf
-
+# Include config files
+include /etc/monit/conf.d/*

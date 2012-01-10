@@ -21,8 +21,8 @@ include_recipe "jetty"
 
 remote_file node.solr.download do
   source   node.solr.link
-  checksum node.solr.checksum
   mode     0644
+  action   :create_if_missing
 end
 
 bash 'unpack solr' do
@@ -31,8 +31,8 @@ bash 'unpack solr' do
 end
 
 bash 'install solr into jetty' do
-  code   "cp #{node.solr.war} #{node.jetty.home}/webapps/solr.war"
-  not_if "test -f #{node.jetty.home}/webapps/solr.war"
+  code   "mkdir -p #{node.solr.home} && cp #{node.solr.war} #{node.solr.home}/solr.war"
+  not_if "test -f #{node.solr.home}/solr.war"
   notifies :restart, resources(:service => "jetty")
 end
 
@@ -43,7 +43,7 @@ directory node.solr.data do
   mode      "750"
 end
 
-template "#{node.jetty.home}/contexts/solr.xml" do
+template "#{node.jetty.context_dir}/solr.xml" do
   owner  node.jetty.user
   source "solr.context.erb"
   notifies :restart, resources(:service => "jetty")

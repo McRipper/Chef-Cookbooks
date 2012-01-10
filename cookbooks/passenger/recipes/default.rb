@@ -11,6 +11,10 @@ if ['ubuntu', 'debian'].member? node[:platform]
   end
 end
 
+rbenv_gem "passenger" do
+  action :install
+end
+
 nginx_path = node[:passenger][:production][:path]
 
 rbenv_script "Install passenger Nginx" do

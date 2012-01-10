@@ -1,10 +1,10 @@
-## Chef
+# Chef
 
 Chef recipes to install a base system with rbenv, Passenger and Nginx
 Search engine provided by Solr
 
 
-* Capistrano
+## Capistrano
 
 To let capistrano install the correct gems you must add this to your delpoy.rb
 
@@ -20,6 +20,6 @@ set :bundle_flags, "--deployment --quiet --binstubs --shebang ruby-local-exec"
 
 ## TOFIX
 
-Monit
-Solr
-Passenger Nginx template
+* Monit
+* Solr
+* Passenger Nginx template

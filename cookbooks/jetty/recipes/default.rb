@@ -17,6 +17,9 @@
 # limitations under the License.
 
 include_recipe "java"
+include_recipe "iptables"
+
+iptables_rule "port_jetty"
 
 case node.platform
 when "centos","redhat","fedora"

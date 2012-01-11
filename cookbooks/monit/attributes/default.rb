@@ -23,7 +23,7 @@ default["monit"]["logfile"]           = "/var/log/monit.log"
 default["monit"]["alert_email"]       = "root@localhost"
 
 default["monit"]["web_interface"] = {
-  :enable  => true,
+  :enable  => false,
   :port    => 2812,
   :address => "localhost",
   :allow   => ["localhost", "admin:b1gbr0th3r"]

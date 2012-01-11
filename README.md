@@ -67,9 +67,8 @@ Base system config
 
 ## TOFIX
 
-* Monit (Add all monit template to recipes)
-* Solr
-* Passenger Nginx template + default conf in app current (deploy to /var/www/appname)
+* Solr (Almost done!)
+* Add more monit template
 * Add Git host key verification
 * Add default staging ssh-keys
-* Mysql secure install?
+* Add deploy user to www-data group

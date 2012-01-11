@@ -1,0 +1,1 @@
+This recipe use Rbenv global as the default ruby for passenger installation

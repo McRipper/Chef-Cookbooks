@@ -1,0 +1,30 @@
+{
+  "name": "ssh_known_hosts",
+  "description": "Dyanmically generates /etc/ssh/known_hosts based on search indexes",
+  "long_description": "Description\n===========\n\nBuild /etc/ssh/known_hosts based on search indexes and build it based on data retrieved by ohai.\n\nRequirements\n============\n\nShould work on any platform that uses `/etc/ssh/known_hosts`.\n\nRequires Chef Server for search.\n\nUsage\n=====\n\nSearches the Chef Server for all hosts that have SSH host keys and\ngenerates an `/etc/ssh/known_hosts`.\n\nChanges\n=======\n\n## v0.4.0:\n\n* COOK-493: include fqdn\n* COOK-721: corrected permissions\n\nLicense and Author\n==================\n\nAuthor:: Scott M. Likens (<scott@likens.us>)\n\nCopyright:: 2009, Opscode, Inc\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n",
+  "maintainer": "Scott M. Likens",
+  "maintainer_email": "scott@likens.us",
+  "license": "Apache 2.0",
+  "platforms": {
+  },
+  "dependencies": {
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+    "ssh_known_hosts": "Dyanmically generates /etc/ssh/known_hosts based on search indexes"
+  },
+  "version": "0.4.0"
+}

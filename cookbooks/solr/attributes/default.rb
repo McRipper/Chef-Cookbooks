@@ -1,7 +1,7 @@
 include_attribute "jetty"
 
 default[:solr][:version]   = "3.5.0"
-default[:solr][:link]      = "http://mirror.nohup.it/apache//lucene/solr/#{solr.version}/apache-solr-#{solr.version}.tgz"
+default[:solr][:link]      = "http://mirror.nohup.it/apache/lucene/solr/#{solr.version}/apache-solr-#{solr.version}.tgz"
 default[:solr][:directory] = "/usr/local/src"
 default[:solr][:download]  = "#{solr.directory}/apache-solr-#{solr.version}.tgz"
 default[:solr][:extracted] = "#{solr.directory}/apache-solr-#{solr.version}"

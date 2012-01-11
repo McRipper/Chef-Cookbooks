@@ -27,7 +27,7 @@ http {
   keepalive_timeout <%= @passenger[:keepalive_timeout] %>;
   gzip <%= @passenger[:gzip] ? 'on' : 'off' %>;
 
-  include sites.d/*.conf;
+  include /var/www/*/current/config/nginx.conf;
 
 }
 

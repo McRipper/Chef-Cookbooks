@@ -17,6 +17,9 @@
 # limitations under the License.
 #
 
+# http://wiki.apache.org/solr/SolrInstall
+# http://wiki.apache.org/solr/SolrJetty#Creating_user
+
 include_recipe "jetty"
 
 remote_file node.solr.download do
@@ -31,20 +34,32 @@ bash 'unpack solr' do
 end
 
 bash 'install solr into jetty' do
-  code   "mkdir -p #{node.solr.home} && cp #{node.solr.war} #{node.solr.home}/solr.war"
-  not_if "test -f #{node.solr.home}/solr.war"
-  notifies :restart, resources(:service => "jetty")
+  code   "cp #{node.solr.war} #{node.jetty.webapp_dir}/solr.war"
+  not_if "test -f #{node.jetty.webapp_dir}/solr.war"
+  # notifies :restart, resources(:service => "jetty")
 end
 
-directory node.solr.data do
-  owner     node.jetty.user
-  group     node.jetty.group
-  recursive true
-  mode      "750"
+bash 'create Solr home' do
+  code <<-CODE
+    useradd -d #{node.solr.home} -s /sbin/false solr
+    chown solr:solr -R #{node.solr.home}
+    mkdir -p /var/log/solr
+    chown solr:solr -R /var/log/solr
+    cp -r #{node.solr.extracted}/example/solr/ #{node.solr.home}
+  CODE
+  not_if "test -d #{node.solr.home}"
+  # notifies :restart, resources(:service => "jetty")
 end
 
-template "#{node.jetty.context_dir}/solr.xml" do
-  owner  node.jetty.user
-  source "solr.context.erb"
-  notifies :restart, resources(:service => "jetty")
-end
+# directory node.solr.data do
+#   owner     node.jetty.user
+#   group     node.jetty.group
+#   recursive true
+#   mode      "750"
+# end
+
+# template "#{node.jetty.context_dir}/solr.xml" do
+#   owner  node.jetty.user
+#   source "solr.context.erb"
+#   notifies :restart, resources(:service => "jetty")
+# end

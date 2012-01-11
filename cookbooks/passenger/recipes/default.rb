@@ -47,13 +47,12 @@ directory "#{nginx_path}/conf/sites.d" do
   notifies :reload, 'service[nginx]'
 end
 
-# rbenv_script "Set nginx path" do
-#   node.set_unless['rbenv']['passenger_root'] = code %{passenger-config --root}
-# end
+rbenv_script "Set passenger root" do
+  code "rm -f /tmp/passenger_root && passenger-config --root > /tmp/passenger_root"
+end
 
-rbenv_script "Set nginx path" do
-  code "passenger-config --root >> /home/vagrant/passenger_path"
-  # %x(rbenv which ruby >> /home/vagrant/ruby_path)
+rbenv_script "Set Ruby path" do
+  code "rm -f /tmp/ruby_path && rbenv which ruby > /tmp/ruby_path"
 end
 
 template "#{nginx_path}/conf/nginx.conf" do
@@ -63,26 +62,13 @@ template "#{nginx_path}/conf/nginx.conf" do
   mode 0644
   variables(
     :log_path => log_path,
-    :ruby_path => %x(cat /home/vagrant/ruby_path),
-    :passenger_root => %x(cat /home/vagrant/passenger_path),
+    :ruby_path => %x(cat /tmp/ruby_path).sub("\n",""),
+    :passenger_root => %x(cat /tmp/passenger_root).sub("\n",""),
     :passenger => node[:passenger][:production],
     :pidfile => "#{nginx_path}/nginx.pid"
   )
   notifies :reload, 'service[nginx]'
 end
-
-# cookbook_file "#{nginx_path}/sbin/config_patch.sh" do
-#   owner "root"
-#   group "root"
-#   mode 0755
-# end
-# 
-# bash "config_patch" do
-#   # only_if "grep '##PASSENGER_ROOT##' #{nginx_path}/conf/nginx.conf"
-#   user "root"
-#   code "#{nginx_path}/sbin/config_patch.sh #{nginx_path}/conf/nginx.conf"
-#   notifies :reload, 'service[nginx]'
-# end
 
 template "/etc/init.d/nginx" do
   source "nginx.init.erb"

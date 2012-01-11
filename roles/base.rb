@@ -10,9 +10,10 @@ run_list(
   "recipe[build-essential]",
   "recipe[vim]",
   "recipe[git]",
+  # "recipe[ssh_known_hosts]",
   "recipe[screen]",
   "recipe[hostname]",
-  # "recipe[monit]",
+  "recipe[monit]",
   "recipe[fail2ban]"
 )
 
@@ -23,14 +24,7 @@ override_attributes(
       :passwordless => true
     }
   },
-  :set_fqdn => "vagrant.staging",
-  :monit => { 
-    :notify_email => "",
-    :mail_format => { 
-      :from => "",
-      :subject => ""
-    }
-  }
+  :set_fqdn => "vagrant.staging"
 )
 
 # export LC_ALL=it_IT.UTF-8

@@ -26,10 +26,6 @@ rbenv_script "Install passenger Nginx" do
   not_if "test -e #{nginx_path}"
 end
 
-rbenv_script "Set nginx path" do
-  
-end
-
 log_path = node[:passenger][:production][:log_path]
 
 directory log_path do
@@ -51,21 +47,30 @@ directory "#{nginx_path}/conf/sites.d" do
   notifies :reload, 'service[nginx]'
 end
 
-# template "#{nginx_path}/conf/nginx.conf" do
-#   source "nginx.conf.erb"
-#   owner "root"
-#   group "root"
-#   mode 0644
-#   variables(
-#     :log_path => log_path,
-#     :passenger_root => %x(rbenv which passenger),
-#     :ruby_path => %x(rbenv which ruby),
-#     :passenger => node[:passenger][:production],
-#     :pidfile => "#{nginx_path}/nginx.pid"
-#   )
-#   notifies :run, 'bash[config_patch]'
+# rbenv_script "Set nginx path" do
+#   node.set_unless['rbenv']['passenger_root'] = code %{passenger-config --root}
 # end
-# 
+
+rbenv_script "Set nginx path" do
+  code "passenger-config --root >> /home/vagrant/passenger_path"
+  # %x(rbenv which ruby >> /home/vagrant/ruby_path)
+end
+
+template "#{nginx_path}/conf/nginx.conf" do
+  source "nginx.conf.erb"
+  owner "root"
+  group "root"
+  mode 0644
+  variables(
+    :log_path => log_path,
+    :ruby_path => %x(cat /home/vagrant/ruby_path),
+    :passenger_root => %x(cat /home/vagrant/passenger_path),
+    :passenger => node[:passenger][:production],
+    :pidfile => "#{nginx_path}/nginx.pid"
+  )
+  notifies :reload, 'service[nginx]'
+end
+
 # cookbook_file "#{nginx_path}/sbin/config_patch.sh" do
 #   owner "root"
 #   group "root"

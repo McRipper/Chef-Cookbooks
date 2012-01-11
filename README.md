@@ -59,8 +59,17 @@ Vagrant::Config.run do |config|
 end
 ```
 
+## VERSION
+
+### v1.0
+
+Base system config
+
 ## TOFIX
 
 * Monit (Add all monit template to recipes)
 * Solr
-* Passenger Nginx template
+* Passenger Nginx template + default conf in app current (deploy to /var/www/appname)
+* Add Git host key verification
+* Add default staging ssh-keys
+* Mysql secure install?

@@ -7,38 +7,38 @@
     "role[search]"
   ],
   
-  :authorization => {
-    :sudo => {
-      :users => ["deploy", "vagrant"],
-      :passwordless => true
+  "authorization": {
+    "sudo": {
+      "users": ["deploy", "vagrant"],
+      "passwordless": true
     }
   },
   
-  :set_fqdn => "vagrant.staging",
+  "set_fqdn": "vagrant.staging",
   
-  :jetty => {
-    :home         => "/opt/solr",
-    :java_options => "-Dsolr.solr.home=#{node.jetty.home} -Xmx256m -Djava.awt.headless=true",
-    :user         => "solr",
-    :group        => "solr",
-    :log_dir      => "/var/log/solr"
+  "jetty": {
+    "home"         : "/opt/solr",
+    "java_options" : "-Dsolr.solr.home=#{node.jetty.home} -Xmx256m -Djava.awt.headless=true",
+    "user"         : "solr",
+    "group"        : "solr",
+    "log_dir"      : "/var/log/solr"
   },
   
-  :solr => {
-    :home => "/opt/solr",
-    :data => "/opt/solr/data"
+  "solr": {
+    "home": "/opt/solr",
+    "data": "/opt/solr/data"
   },
   
-  :mysql => { 
-    :server_root_password => "adminpass"
+  "mysql": { 
+    "server_root_password": "adminpass"
   },
   
-  :rbenv => { 
-    :rubies => ["1.9.3-p0"],
-    :global => "1.9.3-p0",
-    :gems => {
-      '1.9.3-p0' => [
-        { 'name' => 'bundler', 'version' => '1.1.rc.7', 'rbenv_version' => '1.9.3-p0' }
+  "rbenv": { 
+    "rubies": ["1.9.3-p0"],
+    "global": "1.9.3-p0",
+    "gems": {
+      '1.9.3-p0': [
+        { 'name': 'bundler', 'version': '1.1.rc.7', 'rbenv_version': '1.9.3-p0' }
       ]
     }
   }

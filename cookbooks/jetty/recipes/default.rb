@@ -41,6 +41,13 @@ jetty_pkgs.each do |pkg|
   end
 end
 
+directory "/var/log/jetty" do
+  owner node["jetty"]["user"]
+  group node["jetty"]["owner"]
+  mode "0755"
+  action :create
+end
+
 service "jetty" do
   case node["platform"]
   when "centos","redhat","fedora"

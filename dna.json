@@ -1,7 +1,6 @@
 {
   "run_list": [
     "role[base]",
-    "role[app]",
     "role[database]",
     "role[web]",
     "role[search]"
@@ -10,7 +9,7 @@
   "authorization": {
     "sudo": {
       "users": ["deploy", "vagrant"],
-      "passwordless": true
+      "passwordless": "true"
     }
   },
   
@@ -18,7 +17,7 @@
   
   "jetty": {
     "home"         : "/opt/solr",
-    "java_options" : "-Dsolr.solr.home=#{node.jetty.home} -Xmx256m -Djava.awt.headless=true",
+    "java_options" : "-Dsolr.solr.home=/opt/solr -Xmx256m -Djava.awt.headless=true",
     "user"         : "solr",
     "group"        : "solr",
     "log_dir"      : "/var/log/solr"
@@ -37,8 +36,8 @@
     "rubies": ["1.9.3-p0"],
     "global": "1.9.3-p0",
     "gems": {
-      '1.9.3-p0': [
-        { 'name': 'bundler', 'version': '1.1.rc.7', 'rbenv_version': '1.9.3-p0' }
+      "1.9.3-p0": [
+        { "name": "bundler", "version": "1.1.rc.7", "rbenv_version": "1.9.3-p0" }
       ]
     }
   }

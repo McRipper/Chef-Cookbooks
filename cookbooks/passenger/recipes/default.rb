@@ -48,11 +48,13 @@ directory "#{nginx_path}/conf/sites.d" do
 end
 
 rbenv_script "Set passenger root" do
-  code "rm -f /tmp/passenger_root && passenger-config --root > /tmp/passenger_root"
+  code "passenger-config --root > /tmp/passenger_root"
+  not_if "test -f /tmp/passenger_root"
 end
 
 rbenv_script "Set Ruby path" do
-  code "rm -f /tmp/ruby_path && rbenv which ruby > /tmp/ruby_path"
+  code "rbenv which ruby > /tmp/ruby_path"
+  not_if "test -f /tmp/ruby_path"
 end
 
 template "#{nginx_path}/conf/nginx.conf" do

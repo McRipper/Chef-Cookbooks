@@ -43,10 +43,14 @@ end
 
 directory "/var/log/jetty" do
   owner node["jetty"]["user"]
-  group node["jetty"]["owner"]
+  group node["jetty"]["group"]
   mode "0755"
   action :create
   recursive true
+end
+
+bash 'chown jetty log' do
+  code "chown #{node.jetty.user}:#{node.jetty.group} -R /var/log/jetty"
 end
 
 service "jetty" do
@@ -56,7 +60,7 @@ service "jetty" do
     supports :restart => true
   when "debian","ubuntu"
     service_name "jetty"
-    supports :restart => true, :status => true
+    supports :restart => false, :status => true
     action [:enable, :start]
   end
 end

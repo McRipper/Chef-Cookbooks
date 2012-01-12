@@ -39,20 +39,20 @@ bash 'install solr into jetty' do
   # notifies :restart, resources(:service => "jetty")
 end
 
-bash 'create Solr home' do
-  code <<-CODE
-    useradd -d #{node.solr.home} -s /sbin/false solr
-    chown solr:solr -R #{node.solr.home}
-    mkdir -p /var/log/solr
-    chown solr:solr -R /var/log/solr
-    cp -r #{node.solr.extracted}/example/solr/ #{node.solr.home}
-  CODE
-  not_if "test -d #{node.solr.home}"
-  # notifies :restart, resources(:service => "jetty")
-
-  # mkdir -p #{node.solr.data}
-  # chown solr:solr -R #{node.solr.data}
-end
+# bash 'create Solr home' do
+#   code <<-CODE
+#     useradd -d #{node.solr.home} -s /sbin/false solr
+#     chown solr:solr -R #{node.solr.home}
+#     mkdir -p /var/log/solr
+#     chown solr:solr -R /var/log/solr
+#     cp -r #{node.solr.extracted}/example/solr/ #{node.solr.home}
+#   CODE
+#   not_if "test -d #{node.solr.home}"
+#   # notifies :restart, resources(:service => "jetty")
+# 
+#   # mkdir -p #{node.solr.data}
+#   # chown solr:solr -R #{node.solr.data}
+# end
 
 directory node.solr.data do
   owner     node.jetty.user

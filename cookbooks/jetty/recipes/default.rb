@@ -46,6 +46,7 @@ directory "/var/log/jetty" do
   group node["jetty"]["owner"]
   mode "0755"
   action :create
+  recursive true
 end
 
 service "jetty" do

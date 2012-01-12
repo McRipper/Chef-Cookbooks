@@ -72,3 +72,8 @@ Base system config
 * Add Git host key verification
 * Add default staging ssh-keys
 * Add deploy user to www-data group
+
+
+
+
+Solr home must be inside your app configuration

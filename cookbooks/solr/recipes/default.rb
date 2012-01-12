@@ -49,14 +49,17 @@ bash 'create Solr home' do
   CODE
   not_if "test -d #{node.solr.home}"
   # notifies :restart, resources(:service => "jetty")
+
+  # mkdir -p #{node.solr.data}
+  # chown solr:solr -R #{node.solr.data}
 end
 
-# directory node.solr.data do
-#   owner     node.jetty.user
-#   group     node.jetty.group
-#   recursive true
-#   mode      "750"
-# end
+directory node.solr.data do
+  owner     node.jetty.user
+  group     node.jetty.group
+  recursive true
+  mode      "750"
+end
 
 # template "#{node.jetty.context_dir}/solr.xml" do
 #   owner  node.jetty.user

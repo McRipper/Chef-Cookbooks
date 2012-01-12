@@ -17,14 +17,4 @@ run_list(
   "recipe[fail2ban]"
 )
 
-override_attributes(
-  :authorization => {
-    :sudo => {
-      :users => ["deploy", "vagrant"],
-      :passwordless => true
-    }
-  },
-  :set_fqdn => "vagrant.staging"
-)
-
 # export LC_ALL=it_IT.UTF-8

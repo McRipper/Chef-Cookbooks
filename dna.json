@@ -29,7 +29,8 @@
   },
   
   "mysql": { 
-    "server_root_password": "adminpass"
+    "server_root_password": "adminpass",
+    "bind_address": "127.0.0.1"
   },
   
   "rbenv": { 

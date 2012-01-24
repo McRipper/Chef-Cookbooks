@@ -1,7 +1,6 @@
 # Chef
 
-Chef recipes to install a base system with rbenv, Passenger and Nginx
-Search engine provided by Solr
+Chef recipes to install a base system with rbenv, Passenger and Nginx, Search engine provided by Solr
 
 
 ## Capistrano
@@ -34,6 +33,7 @@ Vagrant::Config.run do |config|
   config.vm.customize do |vm|
     vm.memory_size = 324
     vm.cpu_execution_cap = 80
+    vm.vram_size = 16
   end
   
   config.vm.boot_mode = :gui
@@ -41,7 +41,6 @@ Vagrant::Config.run do |config|
   config.vm.network "33.33.33.10"
   
   config.vm.forward_port "http", 80, 8080
-  config.vm.forward_port "solr", 8983, 8983
   
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "config/chef/cookbooks"
@@ -54,7 +53,7 @@ Vagrant::Config.run do |config|
     chef.add_role "search"
     chef.add_role "web"
     
-    # chef.json.merge!(JSON.parse(File.read("config/chef/dna.json")))
+    chef.json.merge!(JSON.parse(File.read("config/chef/dna.json")))
   end
 end
 ```
@@ -67,13 +66,14 @@ Base system config
 
 ## TOFIX
 
-* Solr (Almost done!)
 * Add more monit template
+* Add postfix
 * Add Git host key verification
 * Add default staging ssh-keys
 * Add deploy user to www-data group
 
+## BUG
 
+* Fail2Ban rewrite iptables rules
+* Jetty cannot restart, you must stop and start each time
 
-
-Solr home must be inside your app configuration

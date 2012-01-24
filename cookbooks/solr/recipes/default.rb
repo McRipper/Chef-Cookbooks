@@ -41,7 +41,7 @@ end
 
 # bash 'create Solr home' do
 #   code <<-CODE
-#     useradd -d #{node.solr.home} -s /sbin/false solr
+#     useradd -d /home/solr -m -s /sbin/false solr
 #     chown solr:solr -R #{node.solr.home}
 #     mkdir -p /var/log/solr
 #     chown solr:solr -R /var/log/solr

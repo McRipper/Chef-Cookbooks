@@ -50,11 +50,9 @@ Vagrant::Config.run do |config|
   config.vm.box = "lucid32"
   config.vm.box_url = "http://files.vagrantup.com/lucid32.box"
   
-  config.vm.customize do |vm|
-    vm.memory_size = 324
-    vm.cpu_execution_cap = 80
-    vm.vram_size = 16
-  end
+  config.vm.customize ["modifyvm", :id, "--memory", 324]
+  config.vm.customize ["modifyvm", :id, "--cpuexecutioncap", 80]
+  config.vm.customize ["modifyvm", :id, "--vram", 16]
   
   config.vm.boot_mode = :gui
   

@@ -58,9 +58,9 @@ Vagrant::Config.run do |config|
   
   config.vm.boot_mode = :gui
   
-  config.vm.network "33.33.33.10"
+  config.vm.network :hostonly, "33.33.33.10"
   
-  config.vm.forward_port "http", 80, 8080
+  config.vm.forward_port 80, 8080
   
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "config/chef/cookbooks"

@@ -17,4 +17,8 @@
 # limitations under the License.
 #
 
+include_recipe "iptables"
+
+iptables_rule "port_mysql"
+
 include_recipe "mysql::client"

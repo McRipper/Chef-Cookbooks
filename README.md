@@ -3,6 +3,26 @@
 Chef recipes to install a base system with rbenv, Passenger and Nginx, Search engine provided by Solr
 
 
+## Usage
+
+Install the vagrant gem and in the project directory:
+
+``` ruby
+vagrant init
+```
+
+To install the submodule, in the project directory do:
+
+``` ruby
+git submodule add git://github.com/McRipper/Chef-Cookbooks.git config/chef
+```
+
+to update:
+
+``` ruby
+git submodule update
+```
+
 ## Capistrano
 
 To let capistrano install the correct gems you must add this to your delpoy.rb

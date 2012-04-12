@@ -3,6 +3,14 @@
 Chef recipes to install a base system with rbenv, Passenger and Nginx, Search engine provided by Solr
 
 
+## Bootstrap
+
+https://github.com/matschaffer/knife-solo
+
+gem install knife-solo
+
+knife prepare ubuntu@10.0.0.201
+
 ## Usage
 
 Install the vagrant gem and in the project directory:
